@@ -6,39 +6,49 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import kz.arctan.movierecommendation.login.presentation.LoginView
+import kz.arctan.movierecommendation.login.presentation.LoginViewModel
+import kz.arctan.movierecommendation.register.presentation.RegistrationView
+import kz.arctan.movierecommendation.register.presentation.RegistrationViewModel
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MovieRecommendationTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    LoginView()
-                }
-            }
+            App()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
+fun App() {
     MovieRecommendationTheme {
-        Greeting("Android")
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "login") {
+                composable("login") {
+                    val loginViewModel = hiltViewModel<LoginViewModel>()
+                    LoginView(viewModel = loginViewModel, navController = navController)
+                }
+                composable("registration") {
+                    val registrationViewModel = hiltViewModel<RegistrationViewModel>()
+                    RegistrationView(
+                        viewModel = registrationViewModel,
+                        navController = navController
+                    )
+                }
+            }
+        }
     }
 }

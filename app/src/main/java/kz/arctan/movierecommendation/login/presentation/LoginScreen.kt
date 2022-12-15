@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import kz.arctan.movierecommendation.common.presentation.LetsSeeButton
 import kz.arctan.movierecommendation.common.presentation.LetsSeeTextField
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
@@ -25,7 +26,8 @@ import java.nio.file.WatchEvent
 
 @Composable
 fun LoginView(
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel,
+    navController: NavController
 ) {
     val state = viewModel.loginState.collectAsState()
     LoginScreen(
