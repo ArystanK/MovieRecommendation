@@ -6,4 +6,6 @@ sealed interface LoginEvent {
 
     @JvmInline
     value class PasswordChangeLoginEvent(val newPassword: String) : LoginEvent
+
+    object ShowPasswordLoginEvent : LoginEvent
 }
