@@ -87,7 +87,7 @@ fun LoginScreen(
             LetsSeeTextField(
                 value = email,
                 onValueChange = onEmailChange,
-                placeholder = "Email"
+                placeholder = "Email",
             )
             Text(text = "Password", fontWeight = FontWeight.SemiBold)
             LetsSeeTextField(
@@ -97,11 +97,12 @@ fun LoginScreen(
                 trailingIcon = {
                     IconButton(onClick = showPassword) {
                         Icon(
-                            imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                            imageVector = if (!passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                             contentDescription = "Visibility toggle"
                         )
                     }
-                }
+                },
+                isVisible = passwordVisible
             )
         }
         Column(
