@@ -12,12 +12,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
 import kz.arctan.movierecommendation.login.presentation.LoginView
 import kz.arctan.movierecommendation.login.presentation.LoginViewModel
+import kz.arctan.movierecommendation.register.presentation.RegistrationScreen
 import kz.arctan.movierecommendation.register.presentation.RegistrationView
 import kz.arctan.movierecommendation.register.presentation.RegistrationViewModel
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +41,12 @@ fun App() {
             color = MaterialTheme.colors.background
         ) {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "login") {
-                composable("login") {
+            NavHost(navController = navController, startDestination = Routes.LoginView) {
+                composable(Routes.LoginView) {
                     val loginViewModel = hiltViewModel<LoginViewModel>()
                     LoginView(viewModel = loginViewModel, navController = navController)
                 }
-                composable("registration") {
+                composable(Routes.RegistrationView) {
                     val registrationViewModel = hiltViewModel<RegistrationViewModel>()
                     RegistrationView(
                         viewModel = registrationViewModel,

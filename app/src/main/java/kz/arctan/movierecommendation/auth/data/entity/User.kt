@@ -1,4 +1,4 @@
-package kz.arctan.movierecommendation.login.data.entity
+package kz.arctan.movierecommendation.auth.data.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,6 +1,6 @@
-package kz.arctan.movierecommendation.login.domain
+package kz.arctan.movierecommendation.auth.domain
 
-import kz.arctan.movierecommendation.login.data.entity.User
+import kz.arctan.movierecommendation.auth.data.entity.User
 
 interface UserRepository {
     suspend fun updateUser(pastUser: User, newUser: User)

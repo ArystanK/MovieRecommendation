@@ -3,7 +3,10 @@ package kz.arctan.movierecommendation.login.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -12,17 +15,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import kz.arctan.movierecommendation.Routes
 import kz.arctan.movierecommendation.common.presentation.LetsSeeButton
 import kz.arctan.movierecommendation.common.presentation.LetsSeeTextField
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
-import java.nio.file.WatchEvent
 
 @Composable
 fun LoginView(
@@ -34,11 +35,11 @@ fun LoginView(
         email = state.value.login,
         password = state.value.password,
         passwordVisible = state.value.passwordVisible,
+        showPassword = { viewModel.reduce(LoginEvent.ShowPasswordLoginEvent) },
         onEmailChange = { viewModel.reduce(LoginEvent.LoginChangeLoginEvent(it)) },
         onPasswordChange = { viewModel.reduce(LoginEvent.PasswordChangeLoginEvent(it)) },
-        goToRegistration = {},
+        goToRegistration = { navController.navigate(Routes.RegistrationView) },
         login = {},
-        showPassword = { viewModel.reduce(LoginEvent.ShowPasswordLoginEvent) }
     )
 }
 
@@ -88,7 +89,7 @@ fun LoginScreen(
                 onValueChange = onEmailChange,
                 placeholder = "Email"
             )
-            Text(text = "Password")
+            Text(text = "Password", fontWeight = FontWeight.SemiBold)
             LetsSeeTextField(
                 value = password,
                 onValueChange = onPasswordChange,
@@ -107,7 +108,8 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .padding(top = 64.dp)
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             LetsSeeButton(
                 modifier = Modifier

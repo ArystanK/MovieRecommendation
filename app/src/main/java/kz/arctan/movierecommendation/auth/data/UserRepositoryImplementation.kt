@@ -1,7 +1,7 @@
-package kz.arctan.movierecommendation.login.data
+package kz.arctan.movierecommendation.auth.data
 
-import kz.arctan.movierecommendation.login.data.entity.User
-import kz.arctan.movierecommendation.login.domain.UserRepository
+import kz.arctan.movierecommendation.auth.data.entity.User
+import kz.arctan.movierecommendation.auth.domain.UserRepository
 
 class UserRepositoryImplementation : UserRepository {
     override suspend fun updateUser(pastUser: User, newUser: User) {
