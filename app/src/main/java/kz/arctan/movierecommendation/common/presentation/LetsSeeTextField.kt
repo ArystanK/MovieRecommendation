@@ -1,9 +1,10 @@
 package kz.arctan.movierecommendation.common.presentation
 
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -43,6 +44,29 @@ fun LetsSeeTextField(
             shape = RoundedCornerShape(12.dp)
         ),
         visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation()
+    )
+}
+
+@Composable
+fun LetsSeePasswordTextField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    showPassword: () -> Unit,
+    passwordVisible: Boolean
+) {
+    LetsSeeTextField(
+        value = password,
+        onValueChange = onPasswordChange,
+        placeholder = "Password",
+        trailingIcon = {
+            IconButton(onClick = showPassword) {
+                Icon(
+                    imageVector = if (!passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                    contentDescription = "Visibility toggle"
+                )
+            }
+        },
+        isVisible = passwordVisible
     )
 }
 

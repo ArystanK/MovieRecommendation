@@ -10,9 +10,7 @@ sealed interface RegistrationEvent {
     @JvmInline
     value class PasswordChangeRegistrationEvent(val password: String) : RegistrationEvent
 
-    @JvmInline
-    value class PasswordVisibilityToggleRegistrationEvent(val passwordShown: Boolean) :
-        RegistrationEvent
+    object PasswordVisibilityToggleRegistrationEvent : RegistrationEvent
 
     object RegisterClickRegistrationEvent : RegistrationEvent
 }

@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kz.arctan.movierecommendation.Routes
 import kz.arctan.movierecommendation.common.presentation.LetsSeeButton
+import kz.arctan.movierecommendation.common.presentation.LetsSeePasswordTextField
 import kz.arctan.movierecommendation.common.presentation.LetsSeeTextField
+import kz.arctan.movierecommendation.common.presentation.LetsSeeTitle
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
 
 @Composable
@@ -65,19 +67,7 @@ fun LoginScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Welcome",
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.SemiBold,
-                letterSpacing = 2.sp,
-                fontSize = 32.sp
-            )
-            Text(
-                text = "Login to your account",
-                style = MaterialTheme.typography.caption,
-                color = Color.Gray.copy(alpha = 0.5f),
-                fontSize = 22.sp,
-            )
+            LetsSeeTitle(title = "Welcome", subtitle = "Login to your account")
         }
         Column(
             modifier = Modifier.padding(top = 36.dp),
@@ -90,19 +80,11 @@ fun LoginScreen(
                 placeholder = "Email",
             )
             Text(text = "Password", fontWeight = FontWeight.SemiBold)
-            LetsSeeTextField(
-                value = password,
-                onValueChange = onPasswordChange,
-                placeholder = "Password",
-                trailingIcon = {
-                    IconButton(onClick = showPassword) {
-                        Icon(
-                            imageVector = if (!passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                            contentDescription = "Visibility toggle"
-                        )
-                    }
-                },
-                isVisible = passwordVisible
+            LetsSeePasswordTextField(
+                password = password,
+                onPasswordChange = onPasswordChange,
+                showPassword = showPassword,
+                passwordVisible = passwordVisible
             )
         }
         Column(
