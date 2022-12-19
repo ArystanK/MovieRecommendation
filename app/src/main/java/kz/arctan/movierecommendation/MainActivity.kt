@@ -17,6 +17,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import kz.arctan.movierecommendation.login.presentation.LoginView
 import kz.arctan.movierecommendation.login.presentation.LoginViewModel
+import kz.arctan.movierecommendation.main.data.Movie
+import kz.arctan.movierecommendation.main.presentation.ChooseGenreView
+import kz.arctan.movierecommendation.main.presentation.MainViewModel
+import kz.arctan.movierecommendation.main.presentation.MovieItemView
+import kz.arctan.movierecommendation.main.presentation.MovieListScreen
 import kz.arctan.movierecommendation.register.presentation.RegistrationScreen
 import kz.arctan.movierecommendation.register.presentation.RegistrationView
 import kz.arctan.movierecommendation.register.presentation.RegistrationViewModel
@@ -27,7 +32,57 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            App()
+            MovieRecommendationTheme {
+//                MovieListScreen(
+//                    movies = listOf(
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                        Movie(
+//                            title = "Interstellar",
+//                            description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                            genres = listOf(),
+//                            image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                        ),
+//                    ),
+//                    topMovie = Movie(
+//                        title = "Interstellar",
+//                        description = "jdgfiosbdnfmdso;fgrsioghreopvmdsl;kvnfdskgnrdsfklgfmndjklsbgirfsfngvoedbhgiusrfjkevbnklfedangkjrfdsnvblkadegbjkdrfnvjkldsbgjkredafnvliedfgerjkldsnfilsdkghioedrhgriolegnriledskgbhkfuedjgildfgfdhgnedrfile",
+//                        genres = listOf(),
+//                        image = "https://cdn.vox-cdn.com/thumbor/yHpuduOqZvdnlXssDTv7nNNJdUk=/44x0:3427x2255/1400x1400/filters:focal(44x0:3427x2255):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/43539058/interstellar.0.0.jpg"
+//                    ),
+//                    onTopMovieClick = { /*TODO*/ },
+//                    onMovieClick = {}
+//                )
+                App()
+            }
         }
     }
 }
@@ -52,6 +107,10 @@ fun App() {
                         viewModel = registrationViewModel,
                         navController = navController
                     )
+                }
+                composable(Routes.ChooseGenreView) {
+                    val mainViewModel = hiltViewModel<MainViewModel>()
+                    ChooseGenreView(viewModel = mainViewModel, navController = navController)
                 }
             }
         }

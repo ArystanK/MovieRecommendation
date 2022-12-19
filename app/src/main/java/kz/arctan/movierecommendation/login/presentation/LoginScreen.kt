@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,18 +31,18 @@ import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
 @Composable
 fun LoginView(
     viewModel: LoginViewModel,
-    navController: NavController
+    navController: NavController,
 ) {
-    val state = viewModel.loginState.collectAsState()
+    val state by viewModel.loginState.collectAsState()
     LoginScreen(
-        email = state.value.login,
-        password = state.value.password,
-        passwordVisible = state.value.passwordVisible,
+        email = state.login,
+        password = state.password,
+        passwordVisible = state.passwordVisible,
         showPassword = { viewModel.reduce(LoginEvent.ShowPasswordLoginEvent) },
         onEmailChange = { viewModel.reduce(LoginEvent.LoginChangeLoginEvent(it)) },
         onPasswordChange = { viewModel.reduce(LoginEvent.PasswordChangeLoginEvent(it)) },
         goToRegistration = { navController.navigate(Routes.RegistrationView) },
-        login = {},
+        login = { navController.navigate(Routes.ChooseGenreView) },
     )
 }
 
@@ -54,7 +55,7 @@ fun LoginScreen(
     passwordVisible: Boolean,
     showPassword: () -> Unit,
     goToRegistration: () -> Unit,
-    login: () -> Unit
+    login: () -> Unit,
 ) {
     Column(
         modifier = Modifier

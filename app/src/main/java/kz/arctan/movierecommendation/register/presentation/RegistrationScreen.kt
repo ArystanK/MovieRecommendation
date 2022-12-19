@@ -21,16 +21,16 @@ fun RegistrationView(
     viewModel: RegistrationViewModel,
     navController: NavController
 ) {
-    val state = viewModel.registrationState.collectAsState()
+    val state by viewModel.registrationState.collectAsState()
     RegistrationScreen(
-        username = state.value.username,
+        username = state.username,
         onUsernameChange = { viewModel.reduce(RegistrationEvent.UsernameChangeRegistrationEvent(it)) },
-        email = state.value.email,
+        email = state.email,
         onEmailChange = { viewModel.reduce(RegistrationEvent.EmailChangeRegistrationEvent(it)) },
-        password = state.value.password,
+        password = state.password,
         onPasswordChange = { viewModel.reduce(RegistrationEvent.PasswordChangeRegistrationEvent(it)) },
         showPassword = { viewModel.reduce(RegistrationEvent.PasswordVisibilityToggleRegistrationEvent) },
-        passwordVisible = state.value.passwordShown,
+        passwordVisible = state.passwordShown,
         register = {}
     )
 }

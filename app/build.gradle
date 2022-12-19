@@ -98,4 +98,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-paging:$room_version"
+
+    // images from internet
+    implementation("io.coil-kt:coil-compose:2.2.2")
 }
