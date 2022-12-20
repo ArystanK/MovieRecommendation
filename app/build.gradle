@@ -101,4 +101,7 @@ dependencies {
 
     // images from internet
     implementation("io.coil-kt:coil-compose:2.2.2")
+
+    // secure storage of the jwt
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

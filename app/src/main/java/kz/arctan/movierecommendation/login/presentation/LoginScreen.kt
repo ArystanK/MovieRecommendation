@@ -3,25 +3,19 @@ package kz.arctan.movierecommendation.login.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Snackbar
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kz.arctan.movierecommendation.Routes
+import kz.arctan.movierecommendation.common.data.LetsSeeResult
 import kz.arctan.movierecommendation.common.presentation.LetsSeeButton
 import kz.arctan.movierecommendation.common.presentation.LetsSeePasswordTextField
 import kz.arctan.movierecommendation.common.presentation.LetsSeeTextField
@@ -34,16 +28,42 @@ fun LoginView(
     navController: NavController,
 ) {
     val state by viewModel.loginState.collectAsState()
+    val isRegistered by viewModel.userRegistered.collectAsState(LetsSeeResult.Init())
+    var isLoading by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    when (isRegistered) {
+        is LetsSeeResult.Error -> {
+            isLoading = false
+            errorMessage = ((isRegistered as LetsSeeResult.Error<Boolean>).message)
+        }
+        is LetsSeeResult.Init -> {}
+        is LetsSeeResult.Loading -> {
+            isLoading = true
+            errorMessage = null
+        }
+        is LetsSeeResult.Success -> {
+            isLoading = false
+            errorMessage = null
+            navController.navigate(Routes.ChooseGenreView)
+        }
+    }
     LoginScreen(
-        email = state.login,
+        email = state.email,
         password = state.password,
         passwordVisible = state.passwordVisible,
         showPassword = { viewModel.reduce(LoginEvent.ShowPasswordLoginEvent) },
         onEmailChange = { viewModel.reduce(LoginEvent.LoginChangeLoginEvent(it)) },
         onPasswordChange = { viewModel.reduce(LoginEvent.PasswordChangeLoginEvent(it)) },
         goToRegistration = { navController.navigate(Routes.RegistrationView) },
-        login = { navController.navigate(Routes.ChooseGenreView) },
+        login = { viewModel.reduce(LoginEvent.LoginClickLoginEvent) },
     )
+    if (isLoading) Box(Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+    errorMessage?.let {
+        Snackbar {
+            Text(text = it)
+        }
+    }
 }
 
 @Composable

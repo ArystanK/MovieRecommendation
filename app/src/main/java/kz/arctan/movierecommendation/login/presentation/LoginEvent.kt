@@ -8,4 +8,6 @@ sealed interface LoginEvent {
     value class PasswordChangeLoginEvent(val newPassword: String) : LoginEvent
 
     object ShowPasswordLoginEvent : LoginEvent
+
+    object LoginClickLoginEvent : LoginEvent
 }
