@@ -17,6 +17,8 @@ import kz.arctan.movierecommendation.login.presentation.LoginView
 import kz.arctan.movierecommendation.login.presentation.LoginViewModel
 import kz.arctan.movierecommendation.main.presentation.ChooseGenreView
 import kz.arctan.movierecommendation.main.presentation.ChooseGenreViewModel
+import kz.arctan.movierecommendation.main.presentation.MovieListView
+import kz.arctan.movierecommendation.main.presentation.MoviesViewModel
 import kz.arctan.movierecommendation.register.presentation.RegistrationView
 import kz.arctan.movierecommendation.register.presentation.RegistrationViewModel
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
@@ -105,6 +107,10 @@ fun App() {
                 composable(Routes.ChooseGenreView) {
                     val chooseGenreViewModel = hiltViewModel<ChooseGenreViewModel>()
                     ChooseGenreView(viewModel = chooseGenreViewModel, navController = navController)
+                }
+                composable(Routes.MovieListView) {
+                    val moviesViewModel = hiltViewModel<MoviesViewModel>()
+                    MovieListView(navController = navController, moviesViewModel = moviesViewModel)
                 }
             }
         }

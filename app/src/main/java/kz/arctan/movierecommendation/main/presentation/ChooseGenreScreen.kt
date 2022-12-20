@@ -12,6 +12,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kz.arctan.movierecommendation.Routes
 import kz.arctan.movierecommendation.common.presentation.LetsSeeButton
 import kz.arctan.movierecommendation.common.presentation.LetsSeeStaggeredLayout
 
@@ -26,7 +27,9 @@ fun ChooseGenreView(
         genres = state.genres,
         pickedGenres = state.selectedGenres,
         onPickGenre = { viewModel.reduce(GenreChooseEvent.GenrePickedGenreChooseEvent(it)) },
-        onSubmit = { viewModel.reduce(GenreChooseEvent.SubmitSelectedGenreChooseEvent) }
+        onSubmit = {
+            navController.navigate(Routes.MovieListView)
+        }
     )
 }
 
@@ -39,7 +42,7 @@ fun ChooseGenreScreen(
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.spacedBy(50.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LetsSeeStaggeredLayout(
