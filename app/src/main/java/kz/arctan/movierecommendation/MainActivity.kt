@@ -12,17 +12,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import kz.arctan.movierecommendation.login.presentation.LoginView
 import kz.arctan.movierecommendation.login.presentation.LoginViewModel
-import kz.arctan.movierecommendation.main.data.Movie
 import kz.arctan.movierecommendation.main.presentation.ChooseGenreView
-import kz.arctan.movierecommendation.main.presentation.MainViewModel
-import kz.arctan.movierecommendation.main.presentation.MovieItemView
-import kz.arctan.movierecommendation.main.presentation.MovieListScreen
-import kz.arctan.movierecommendation.register.presentation.RegistrationScreen
+import kz.arctan.movierecommendation.main.presentation.ChooseGenreViewModel
 import kz.arctan.movierecommendation.register.presentation.RegistrationView
 import kz.arctan.movierecommendation.register.presentation.RegistrationViewModel
 import kz.arctan.movierecommendation.ui.theme.MovieRecommendationTheme
@@ -109,8 +103,8 @@ fun App() {
                     )
                 }
                 composable(Routes.ChooseGenreView) {
-                    val mainViewModel = hiltViewModel<MainViewModel>()
-                    ChooseGenreView(viewModel = mainViewModel, navController = navController)
+                    val chooseGenreViewModel = hiltViewModel<ChooseGenreViewModel>()
+                    ChooseGenreView(viewModel = chooseGenreViewModel, navController = navController)
                 }
             }
         }

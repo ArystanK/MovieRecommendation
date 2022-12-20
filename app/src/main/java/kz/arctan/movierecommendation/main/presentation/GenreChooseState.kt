@@ -1,6 +1,6 @@
 package kz.arctan.movierecommendation.main.presentation
 
-data class MainState(
+data class GenreChooseState(
     val genres: List<String> = listOf(
         "Action",
         "Adventure",

@@ -28,25 +28,7 @@ fun LoginView(
     navController: NavController,
 ) {
     val state by viewModel.loginState.collectAsState()
-    val isRegistered by viewModel.userRegistered.collectAsState(LetsSeeResult.Init())
-    var isLoading by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    when (isRegistered) {
-        is LetsSeeResult.Error -> {
-            isLoading = false
-            errorMessage = ((isRegistered as LetsSeeResult.Error<Boolean>).message)
-        }
-        is LetsSeeResult.Init -> {}
-        is LetsSeeResult.Loading -> {
-            isLoading = true
-            errorMessage = null
-        }
-        is LetsSeeResult.Success -> {
-            isLoading = false
-            errorMessage = null
-            navController.navigate(Routes.ChooseGenreView)
-        }
-    }
+    if (state.isLoggedIn) navController.navigate(Routes.ChooseGenreView)
     LoginScreen(
         email = state.email,
         password = state.password,
@@ -57,9 +39,9 @@ fun LoginView(
         goToRegistration = { navController.navigate(Routes.RegistrationView) },
         login = { viewModel.reduce(LoginEvent.LoginClickLoginEvent) },
     )
-    if (isLoading) Box(Modifier.fillMaxSize(),
+    if (state.isLoading) Box(Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-    errorMessage?.let {
+    state.errorMessage?.let {
         Snackbar {
             Text(text = it)
         }

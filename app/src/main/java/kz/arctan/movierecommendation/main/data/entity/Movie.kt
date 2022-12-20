@@ -1,4 +1,4 @@
-package kz.arctan.movierecommendation.main.data
+package kz.arctan.movierecommendation.main.data.entity
 
 data class Movie(
     val title: String,

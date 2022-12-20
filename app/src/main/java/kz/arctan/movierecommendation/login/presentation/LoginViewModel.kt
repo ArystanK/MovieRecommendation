@@ -23,9 +23,6 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableStateFlow(LoginState())
     val loginState = _loginState.asStateFlow()
 
-    private val _userRegistered = Channel<LetsSeeResult<Boolean>>()
-    val userRegistered = _userRegistered.receiveAsFlow()
-
     fun reduce(loginEvent: LoginEvent) {
         viewModelScope.launch {
             when (loginEvent) {
@@ -33,18 +30,25 @@ class LoginViewModel @Inject constructor(
                 is LoginEvent.PasswordChangeLoginEvent -> _loginState.update { it.copy(password = loginEvent.newPassword) }
                 LoginEvent.ShowPasswordLoginEvent -> _loginState.update { it.copy(passwordVisible = !_loginState.value.passwordVisible) }
                 LoginEvent.LoginClickLoginEvent -> {
-                    _userRegistered.send(LetsSeeResult.Loading(false))
+                    _loginState.update { it.copy(isLoading = true, errorMessage = null) }
                     val loginDto = LoginDto(_loginState.value.email, _loginState.value.password)
                     authRepository.login(loginDto)
                         .onSuccess {
-                            _userRegistered.send(LetsSeeResult.Success(true))
-                        }.onFailure {
-                            _userRegistered.send(
-                                LetsSeeResult.Error(
-                                    it.localizedMessage ?: "Unknown Error",
-                                    false
+                            _loginState.update {
+                                it.copy(
+                                    isLoggedIn = true,
+                                    isLoading = false,
+                                    errorMessage = null
                                 )
-                            )
+                            }
+                        }.onFailure { error ->
+                            _loginState.update {
+                                it.copy(
+                                    isLoggedIn = false,
+                                    isLoading = false,
+                                    errorMessage = error.localizedMessage
+                                )
+                            }
                         }
                 }
             }
@@ -55,9 +59,21 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             val user = userRepository.getUser()
             user.onSuccess {
-                _userRegistered.send(LetsSeeResult.Success(true))
+                _loginState.update {
+                    it.copy(
+                        isLoggedIn = true,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
             }.onFailure {
-                _userRegistered.send(LetsSeeResult.Init())
+                _loginState.update {
+                    it.copy(
+                        isLoggedIn = false,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
             }
         }
     }
